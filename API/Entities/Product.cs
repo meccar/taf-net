@@ -15,6 +15,6 @@ namespace API.Entities
 
      public string Brand { get; set; }
 
-     public string QuantityInStock { get; set; }
+     public int QuantityInStock { get; set; }
     }
 }

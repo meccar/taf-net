@@ -44,6 +44,17 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<StoreContext> ();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>> ();
+
+try {
+    context.Database.Migrate();
+    DbInitiallizer.Initialize(context);
+} catch (Exception ex) {
+    logger.LogError(ex, "A problem occured");
+}
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
